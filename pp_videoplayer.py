@@ -3,7 +3,6 @@ import os
 from pp_omxdriver import OMXDriver
 from pp_player import Player
 from pp_utils import parse_rectangle
-from pp_show import Show
 
 class VideoPlayer(Player):
     """
@@ -427,10 +426,12 @@ class VideoPlayer(Player):
         self.loading_count=0     # initialise loading timeout counter
         self.play_state='loading'
 
+############# NIK ################
         subt = ""
         if (self.track_params['omx-subtitles']):
-            subt = " --subtitles '" + Show().base_complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
-        
+            subt = " --subtitles '" + self.base_complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
+##################################
+
         # load the selected track
         options= ' --no-osd ' + self.omx_audio+ ' --vol -6000 ' + self.omx_window_processed + ' ' + self.seamless_loop + ' ' + self.omx_other_options +" " + subt + " "
         self.omx.load(track,self.freeze_at_start,options,self.mon.pretty_inst(self),self.omx_volume)
@@ -716,3 +717,13 @@ class VideoPlayer(Player):
                 return 'normal','',fields[0],has_window,self.show_canvas_x1+x1,self.show_canvas_y1+y1,self.show_canvas_x1+x2,self.show_canvas_y1+y2
 
 
+############### NIK #################
+    def base_complete_path(self,track_file):
+        #  complete path of the filename of the selected entry
+        if track_file != '' and track_file[0]=="+":
+            track_file=Player.pp_home+track_file[1:]
+        elif track_file != '' and track_file[0] == "@":
+            track_file=Player.pp_profile+track_file[1:]
+        self.mon.log(self,"Track to load is: "+ track_file)
+        return track_file
+######################################
