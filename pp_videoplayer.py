@@ -3,7 +3,7 @@ import os
 from pp_omxdriver import OMXDriver
 from pp_player import Player
 from pp_utils import parse_rectangle
-from pp_show import base_complete_path
+from pp_show import Show
 
 class VideoPlayer(Player):
     """
@@ -429,7 +429,7 @@ class VideoPlayer(Player):
 
         subt = ""
         if (self.track_params['omx-subtitles']):
-            subt = " --subtitles '" + base_complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
+            subt = " --subtitles '" + Show().base_complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
         
         # load the selected track
         options= ' --no-osd ' + self.omx_audio+ ' --vol -6000 ' + self.omx_window_processed + ' ' + self.seamless_loop + ' ' + self.omx_other_options +" " + subt + " "
