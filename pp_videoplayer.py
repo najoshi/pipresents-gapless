@@ -425,9 +425,13 @@ class VideoPlayer(Player):
         # initialise all the state machine variables
         self.loading_count=0     # initialise loading timeout counter
         self.play_state='loading'
+
+        subt = ""
+        if (self.track_params['omx-subtitles']):
+            subt = " --subtitles '" + self.base_complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
         
         # load the selected track
-        options= ' --no-osd ' + self.omx_audio+ ' --vol -6000 ' + self.omx_window_processed + ' ' + self.seamless_loop + ' ' + self.omx_other_options +" "
+        options= ' --no-osd ' + self.omx_audio+ ' --vol -6000 ' + self.omx_window_processed + ' ' + self.seamless_loop + ' ' + self.omx_other_options +" " + subt + " "
         self.omx.load(track,self.freeze_at_start,options,self.mon.pretty_inst(self),self.omx_volume)
         # self.mon.log (self,'Send load command track '+ self.track + 'with options ' + options + 'from show Id: '+ str(self.show_id))
         # print 'omx.load started ',self.track

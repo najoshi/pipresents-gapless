@@ -93,12 +93,8 @@ class OMXDriver(object):
 
 
         self.dbus_name = "org.mpris.MediaPlayer2.omxplayer"+self.id
-        
-        subt = ""
-        if (self.track_params['omx-subtitles']):
-            subt = " --subtitles '" + self.base_complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
 
-        self.omxplayer_cmd = OMXDriver._LAUNCH_CMD + options + subt + " --dbus_name '"+ self.dbus_name + "' " + track
+        self.omxplayer_cmd = OMXDriver._LAUNCH_CMD + options + " --dbus_name '"+ self.dbus_name + "' " + track
         # self.mon.log(self, 'dbus user ' + self.dbus_user)
         # self.mon.log(self, 'dbus name ' + self.dbus_name)
 
