@@ -98,7 +98,7 @@ class OMXDriver(object):
         # self.mon.log(self, 'dbus user ' + self.dbus_user)
         # self.mon.log(self, 'dbus name ' + self.dbus_name)
 
-        # print self.omxplayer_cmd
+        print self.omxplayer_cmd
         self.mon.log(self, "Send command to omxplayer: "+ self.omxplayer_cmd)
         # self._process=subprocess.Popen(self.omxplayer_cmd,shell=True,stdout=file('/home/pi/pipresents/pp_logs/stdout.txt','a'),stderr=file('/home/pi/pipresents/pp_logs/stderr.txt','a'))
         self._process=subprocess.Popen(self.omxplayer_cmd,shell=True,stdout=file('/dev/null','a'),stderr=file('/dev/null','a'))
