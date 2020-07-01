@@ -94,11 +94,15 @@ class OMXDriver(object):
 
         self.dbus_name = "org.mpris.MediaPlayer2.omxplayer"+self.id
         
-        self.omxplayer_cmd = OMXDriver._LAUNCH_CMD + options + " --dbus_name '"+ self.dbus_name + "' " + track
+        subt = ""
+        if (self.track_params['omx-subtitles']):
+            subt = " --subtitles '" + self.base_complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
+
+        self.omxplayer_cmd = OMXDriver._LAUNCH_CMD + options + subt + " --dbus_name '"+ self.dbus_name + "' " + track
         # self.mon.log(self, 'dbus user ' + self.dbus_user)
         # self.mon.log(self, 'dbus name ' + self.dbus_name)
 
-        print self.omxplayer_cmd
+        # print self.omxplayer_cmd
         self.mon.log(self, "Send command to omxplayer: "+ self.omxplayer_cmd)
         # self._process=subprocess.Popen(self.omxplayer_cmd,shell=True,stdout=file('/home/pi/pipresents/pp_logs/stdout.txt','a'),stderr=file('/home/pi/pipresents/pp_logs/stderr.txt','a'))
         self._process=subprocess.Popen(self.omxplayer_cmd,shell=True,stdout=file('/dev/null','a'),stderr=file('/dev/null','a'))
