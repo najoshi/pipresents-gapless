@@ -434,7 +434,7 @@ class VideoPlayer(Player):
 ############# NIK ################
         subt = ""
         if (self.track_params['omx-subtitles']):
-            subt = " --subtitles '" + self.complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
+            subt = " --subtitles '" + self.complete_path(self.track_params['omx-subtitles']) + "' --lines " + self.track_params['omx-subtitles-numlines'] + " "
 ##################################
 
         # load the selected track
