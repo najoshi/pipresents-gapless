@@ -538,7 +538,7 @@ class PPdefinitions(object):
                 'show':{'title':'New Show','track-ref':'','type':'show','sub-show':'','thumbnail':''},   
                 
                 'image':{'title':'New Image','track-ref':'','type':'image','location':'','thumbnail':'','duration':'','transition':'','image-window':'','image-rotate':'',
-                          'pause-text':'Paused......','pause-text-font':'Helvetica 20 bold','pause-text-colour':'white','pause-text-x':'10','pause-text-y':'40','pause-text-justify':'left',
+                          'pause-text':'Paused...','pause-text-font':'Helvetica 20 bold','pause-text-colour':'white','pause-text-x':'10','pause-text-y':'1000','pause-text-justify':'left',
                          'background-colour':'','background-image':'','display-show-background':'yes','display-show-text':'yes','track-text':'','track-text-font':'',
                        'track-text-colour':'','track-text-x':'','track-text-y':'','track-text-justify':'','links':'','show-control-begin':'','show-control-end':'','animate-begin':'','animate-clear':'no','animate-end':'','plugin':'','pause-timeout':''},
                        
