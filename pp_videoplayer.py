@@ -110,6 +110,11 @@ class VideoPlayer(Player):
         self.frozen_at_end=False
         self.pause_timer=None
 
+############## NIK ###############
+        self.pp_home=pp_home
+        self.pp_profile=pp_profile
+##################################
+
     # LOAD - creates and omxplayer instance, loads a track and then pause
     def load(self,track,loaded_callback,enable_menu):  
         # instantiate arguments
@@ -429,8 +434,7 @@ class VideoPlayer(Player):
 ############# NIK ################
         subt = ""
         if (self.track_params['omx-subtitles']):
-            fullpath = Player.complete_path(self.track_params['omx-subtitles'])
-            subt = " --subtitles '" + fullpath + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
+            subt = " --subtitles '" + self.complete_path(self.track_params['omx-subtitles']) + "'' --lines " + self.track_params['omx-subtitles-numlines'] + " "
 ##################################
 
         # load the selected track
@@ -716,3 +720,15 @@ class VideoPlayer(Player):
             else:
                 has_window=True
                 return 'normal','',fields[0],has_window,self.show_canvas_x1+x1,self.show_canvas_y1+y1,self.show_canvas_x1+x2,self.show_canvas_y1+y2
+
+
+##################### NIK ######################
+    # produce an absolute path from the relative one in track paramters
+    def complete_path(self,track_file):
+        #  complete path of the filename of the selected entry
+        if track_file[0] == "+":
+            track_file=self.pp_home+track_file[1:]
+        elif track_file[0] == "@":
+            track_file=self.pp_profile+track_file[1:]
+        return track_file
+#################################################
