@@ -435,10 +435,11 @@ class VideoPlayer(Player):
         subt = ""
         if (self.track_params['omx-subtitles']):
             subt = " --subtitles '" + self.complete_path(self.track_params['omx-subtitles']) + "' --lines " + self.track_params['omx-subtitles-numlines'] + " "
-##################################
 
         # load the selected track
         options= ' --no-osd ' + self.omx_audio+ ' --vol -6000 ' + self.omx_window_processed + ' ' + self.seamless_loop + ' ' + self.omx_other_options +" " + subt + " "
+##################################
+
         self.omx.load(track,self.freeze_at_start,options,self.mon.pretty_inst(self),self.omx_volume)
         # self.mon.log (self,'Send load command track '+ self.track + 'with options ' + options + 'from show Id: '+ str(self.show_id))
         # print 'omx.load started ',self.track
