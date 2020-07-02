@@ -4,6 +4,7 @@
 from pp_show import Show
 from pp_controlsmanager import ControlsManager
 from pp_screendriver import ScreenDriver
+import random
 
 class GapShow(Show):
     """
@@ -227,6 +228,8 @@ class GapShow(Show):
 
     def start_show(self):
         # initial direction from parent show
+
+        random.shuffle(self.medialist._tracks)
         
         self.kickback_for_next_track=self.parent_kickback_signal
         # print '\n\ninital KICKBACK from parent', self.kickback_for_next_track
