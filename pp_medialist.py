@@ -172,6 +172,10 @@ class MediaList(object):
         return count
 
     def start(self):
+        ############# NIK #############
+        random.shuffle(self._tracks)
+        ###############################
+
         if self.anon_length()==0:
             return False
         # select first anonymous track in the list
