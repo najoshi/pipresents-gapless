@@ -173,7 +173,7 @@ class MediaList(object):
 
     def start(self):
         ############# NIK #############
-        random.shuffle(self._tracks)
+        # random.shuffle(self._tracks)
         ###############################
 
         if self.anon_length()==0:
