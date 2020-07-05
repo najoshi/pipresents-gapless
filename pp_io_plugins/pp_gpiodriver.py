@@ -212,10 +212,10 @@ class pp_gpiodriver(object):
 
     ################## NIK #######################################
     # turn on and off monitor
-    def turn_on(self):
+    def turn_on_monitor(self):
         subprocess.call("vcgencmd display_power 1 &> /dev/null", shell=True)
 
-    def turn_off(self):
+    def turn_off_monitor(self):
         subprocess.call("vcgencmd display_power 0 &> /dev/null", shell=True)
     ##############################################################
 
@@ -238,12 +238,12 @@ class pp_gpiodriver(object):
         ############################ NIK ######################################################
         # If motion hasn't been detected in SHUTOFF_DELAY seconds, turn off monitor and pause
         if not self.turned_off and time.time() > (self.last_motion_time + pp_gpiodriver.SHUTOFF_DELAY):
-            print str(time.time()) + " PIR not motion, turned off is " + str(self.turned_off) 
+            # print str(time.time()) + " PIR not motion, turned off is " + str(self.turned_off) 
             # self.mon.log(self,"PIR not motion. self.pir_switch_on: "+str(self.pir_switch_on)+", self.turned_off: "+str(self.turned_off)+", self.paused: "+str(self.paused))
             # os.system ("echo `date` PIR not motion. self.pir_switch_on: "+str(self.pir_switch_on)+", self.turned_off: "+str(self.turned_off)+", self.paused: "+str(self.paused)+" >> /home/pi/pir.log")
             self.turned_off = True
             # turn off monitor and pause pi presents
-            #self.turn_off()
+            self.turn_off_monitor()
             self.button_callback("pp-pause","GPIO")
         ########################################################################################
 
@@ -283,10 +283,10 @@ class pp_gpiodriver(object):
 ############################ NIK ############################################################
                     if pin[pp_gpiodriver.RISING_NAME]=='PIR' and self.button_callback is not None:
                         self.last_motion_time = time.time()
-                        print "PIR detected: " + str(self.last_motion_time)
+                        # print "PIR detected: " + str(self.last_motion_time)
                         if self.turned_off:
                             self.turned_off = False
-                            #self.turn_on()
+                            self.turn_on_monitor()
                             self.button_callback("pp-pause","GPIO")
 ##############################################################################################
 
