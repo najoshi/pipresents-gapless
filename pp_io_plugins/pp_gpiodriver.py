@@ -72,7 +72,7 @@ class pp_gpiodriver(object):
     ################ NIK #################
     # motion sensor timeout, i.e. after SHUTOFF_DELAY seconds of no motion
     # pipresents pauses and the monitor turns off
-    SHUTOFF_DELAY = 30
+    SHUTOFF_DELAY = 120
     ######################################
     
 
