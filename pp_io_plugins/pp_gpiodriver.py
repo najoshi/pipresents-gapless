@@ -238,7 +238,7 @@ class pp_gpiodriver(object):
         ############################ NIK ######################################################
         # If motion hasn't been detected in SHUTOFF_DELAY seconds, turn off monitor and pause
         if not self.turned_off and time.time() > (self.last_motion_time + pp_gpiodriver.SHUTOFF_DELAY):
-            print str(time.time()) + " PIR not motion: " + str(self.turned_off) 
+            print str(time.time()) + " PIR not motion, turned off is " + str(self.turned_off) 
             # self.mon.log(self,"PIR not motion. self.pir_switch_on: "+str(self.pir_switch_on)+", self.turned_off: "+str(self.turned_off)+", self.paused: "+str(self.paused))
             # os.system ("echo `date` PIR not motion. self.pir_switch_on: "+str(self.pir_switch_on)+", self.turned_off: "+str(self.turned_off)+", self.paused: "+str(self.paused)+" >> /home/pi/pir.log")
             self.turned_off = True
