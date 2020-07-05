@@ -283,7 +283,7 @@ class pp_gpiodriver(object):
 ############################ NIK ############################################################
                     if pin[pp_gpiodriver.RISING_NAME]=='PIR' and self.button_callback is not None:
                         self.last_motion_time = time.time()
-                        print "PIR detected: " + self.last_motion_time
+                        print "PIR detected: " + str(self.last_motion_time)
                         if self.turned_off:
                             self.turned_off = False
                             self.turn_on()
