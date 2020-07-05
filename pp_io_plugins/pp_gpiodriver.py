@@ -243,7 +243,7 @@ class pp_gpiodriver(object):
             # os.system ("echo `date` PIR not motion. self.pir_switch_on: "+str(self.pir_switch_on)+", self.turned_off: "+str(self.turned_off)+", self.paused: "+str(self.paused)+" >> /home/pi/pir.log")
             self.turned_off = True
             # turn off monitor and pause pi presents
-            self.turn_off()
+            #self.turn_off()
             self.button_callback("pp-pause","GPIO")
         ########################################################################################
 
@@ -286,7 +286,7 @@ class pp_gpiodriver(object):
                         print "PIR detected: " + str(self.last_motion_time)
                         if self.turned_off:
                             self.turned_off = False
-                            self.turn_on()
+                            #self.turn_on()
                             self.button_callback("pp-pause","GPIO")
 ##############################################################################################
 
