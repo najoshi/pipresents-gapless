@@ -291,7 +291,9 @@ class GapShow(Show):
         
 
     def start_list(self):
+        ############## NIK ####################
         random.shuffle(self.medialist._tracks)
+        #######################################
 
         # starts the list or any repeat having waited for trigger first.
         self.state='playing'

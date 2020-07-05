@@ -5,6 +5,7 @@ import copy
 import os
 import ConfigParser
 from pp_utils import Monitor
+import subprocess
 
 
 class pp_gpiodriver(object):
@@ -67,6 +68,12 @@ class pp_gpiodriver(object):
     pins=[]
     driver_active=False
     title=''
+
+    ################ NIK #################
+    # motion sensor timeout, i.e. after SHUTOFF_DELAY seconds of no motion
+    # pipresents pauses and the monitor turns off
+    SHUTOFF_DELAY = 120
+    ######################################
     
 
 
@@ -85,6 +92,12 @@ class pp_gpiodriver(object):
         self.filepath=filepath
         self.button_callback=button_callback
         pp_gpiodriver.driver_active = False
+
+        ############### NIK ######################
+        self.turned_off = False
+        self.last_motion_time = time.time()
+        ##########################################
+
 
         # read gpio.cfg file.
         reason,message=self._read(self.filename,self.filepath)
@@ -197,6 +210,15 @@ class pp_gpiodriver(object):
             self.GPIO.cleanup()
             pp_gpiodriver.driver_active=False
 
+    ################## NIK #######################################
+    # turn on and off monitor
+    def turn_on(self):
+        subprocess.call("vcgencmd display_power 1", shell=True)
+
+    def turn_off(self):
+        subprocess.call("vcgencmd display_power 0", shell=True)
+    ##############################################################
+
 
 # ************************************************
 # gpio input functions
@@ -212,6 +234,18 @@ class pp_gpiodriver(object):
 
 
     def _do_buttons(self):
+
+        ############################ NIK ######################################################
+        # If motion hasn't been detected in SHUTOFF_DELAY seconds, turn off monitor and pause
+        if not self.turned_off and time.time() > (self.last_motion_time + pp_gpiodriver.SHUTOFF_DELAY):
+            # self.mon.log(self,"PIR not motion. self.pir_switch_on: "+str(self.pir_switch_on)+", self.turned_off: "+str(self.turned_off)+", self.paused: "+str(self.paused))
+            # os.system ("echo `date` PIR not motion. self.pir_switch_on: "+str(self.pir_switch_on)+", self.turned_off: "+str(self.turned_off)+", self.paused: "+str(self.paused)+" >> /home/pi/pir.log")
+            self.turned_off = True
+            # turn off monitor and pause pi presents
+            self.turn_off()
+            self.button_callback("pp-pause","GPIO")
+        ########################################################################################
+
         for index, pin in enumerate(pp_gpiodriver.pins):
             if pin[pp_gpiodriver.DIRECTION] == 'in':
 
@@ -238,13 +272,23 @@ class pp_gpiodriver(object):
                 if pin[pp_gpiodriver.PRESSED] is True and pin[pp_gpiodriver.LAST] is False:
                     pin[pp_gpiodriver.LAST]=pin[pp_gpiodriver.PRESSED]
                     pin[pp_gpiodriver.REPEAT_COUNT]=pin[pp_gpiodriver.REPEAT]
-                    if  pin[pp_gpiodriver.FALLING_NAME] != '' and self.button_callback  is not  None:
+                    if  pin[pp_gpiodriver.FALLING_NAME] != '' and self.button_callback  is not None:
                         self.button_callback(pin[pp_gpiodriver.FALLING_NAME],pp_gpiodriver.title)
                # rising edge
                 if pin[pp_gpiodriver.PRESSED] is False and pin[pp_gpiodriver.LAST] is True:
                     pin[pp_gpiodriver.LAST]=pin[pp_gpiodriver.PRESSED]
                     pin[pp_gpiodriver.REPEAT_COUNT]=pin[pp_gpiodriver.REPEAT]
-                    if  pin[pp_gpiodriver.RISING_NAME] != '' and self.button_callback  is not  None:
+
+############################ NIK ############################################################
+                    if pin[PPIO.RISING_NAME]=='PIR' and self.button_callback is not None:
+                        self.last_motion_time = time.time()
+                        if self.turned_off:
+                            self.turned_off = False
+                            self.turn_on()
+                            self.button_callback("pp-pause","GPIO")
+##############################################################################################
+
+                    elif pin[pp_gpiodriver.RISING_NAME] != '' and self.button_callback is not None:
                         self.button_callback(pin[pp_gpiodriver.RISING_NAME],pp_gpiodriver.title)
 
                 # do state callbacks
