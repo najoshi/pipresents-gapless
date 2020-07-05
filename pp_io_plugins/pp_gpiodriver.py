@@ -280,7 +280,7 @@ class pp_gpiodriver(object):
                     pin[pp_gpiodriver.REPEAT_COUNT]=pin[pp_gpiodriver.REPEAT]
 
 ############################ NIK ############################################################
-                    if pin[PPIO.RISING_NAME]=='PIR' and self.button_callback is not None:
+                    if pin[pp_gpiodriver.RISING_NAME]=='PIR' and self.button_callback is not None:
                         self.last_motion_time = time.time()
                         if self.turned_off:
                             self.turned_off = False
