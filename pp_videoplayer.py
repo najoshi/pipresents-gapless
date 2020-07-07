@@ -435,7 +435,7 @@ class VideoPlayer(Player):
         subt = ""
         if (self.track_params['omx-subtitles']):
             subtpath = self.complete_path(self.track_params['omx-subtitles'])
-            subtpath.replace("'","'\\''")
+            subtpath = subtpath.replace("'","'\\''")
             subt = " --subtitles '" + subtpath + "' --lines " + self.track_params['omx-subtitles-numlines'] + " "
 
         # load the selected track
