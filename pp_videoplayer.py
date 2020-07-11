@@ -436,7 +436,7 @@ class VideoPlayer(Player):
         if (self.track_params['omx-subtitles']):
             subtpath = self.complete_path(self.track_params['omx-subtitles'])
             subtpath = subtpath.replace("'","'\\''")
-            subt = " --subtitles '" + subtpath + "' --lines " + self.track_params['omx-subtitles-numlines'] + " "
+            subt = " --subtitles '" + subtpath + "' --lines " + self.track_params['omx-subtitles-numlines'] + " --font-size 45 "
 
         # load the selected track
         options= ' --no-osd ' + self.omx_audio+ ' --vol -6000 ' + self.omx_window_processed + ' ' + self.seamless_loop + ' ' + self.omx_other_options +" " + subt + " "
