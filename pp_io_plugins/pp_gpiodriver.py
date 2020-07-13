@@ -244,7 +244,7 @@ class pp_gpiodriver(object):
             self.turned_off = True
             # turn off monitor and pause pi presents
             self.turn_off_monitor()
-            self.button_callback("pp-pause","GPIO")
+            self.button_callback("pp-pause-on","GPIO")
         ########################################################################################
 
         for index, pin in enumerate(pp_gpiodriver.pins):
@@ -287,7 +287,7 @@ class pp_gpiodriver(object):
                         if self.turned_off:
                             self.turned_off = False
                             self.turn_on_monitor()
-                            self.button_callback("pp-pause","GPIO")
+                            self.button_callback("pp-pause-off","GPIO")
 ##############################################################################################
 
                     elif pin[pp_gpiodriver.RISING_NAME] != '' and self.button_callback is not None:
